@@ -1,4 +1,4 @@
-# Transfer_Learning_Design_of_Experiments_for_DNA_Optimisation
+# Transfer Learning Design of Experiments for DNA Optimisation
 
 This repository contains the code for the DNA amplification expeiments conducted for the paper
 _Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in 
