@@ -1,0 +1,17 @@
+pandas>=1.2.3
+numpy==1.21.4
+scipy
+seaborn
+scikit-learn
+openpyxl
+matplotlib
+pymc3>=3.11.2
+arviz>=0.11.2
+jax
+jaxlib
+numpyro
+ipympl
+tqdm
+pathlib
+uncertainties
+sqlalchemy
