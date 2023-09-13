@@ -50,12 +50,15 @@ target variables were calculated in advance. See the paper for more details.
 ## Results
 
 Results of the cross validation experiments:
+
 ![cross_validation](analysis/plots/cross_validation.svg)
 
 Results of the unconstrained Bayesian optimisation experiments:
+
 ![unconstrained](analysis/plots/retroBO_cumulative_regret_r.svg)
 
 Results of the constrained Bayesian optimisation experiments:
+
 ![unconstrained](analysis/plots/retroBO_cumulative_regret_all_both.svg)
 
 
