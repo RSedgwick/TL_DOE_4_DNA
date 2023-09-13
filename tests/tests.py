@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from Code.x_validation_functions import CrossValidation
+from experiments.x_validation_functions import CrossValidation
 import numpy as np
 import pathlib as pl
 import os
@@ -10,7 +10,7 @@ import tensorflow as tf
 warnings.simplefilter("ignore")
 from candas.learn import ParameterSet
 from candas.learn import parray, Standardizer
-from Code.expected_improvements import ExpectedImprovement, ExpectedImprovement
+from experiments.expected_improvements import ExpectedImprovement, ExpectedImprovement
 
 
 class DivideDataTests(unittest.TestCase):
@@ -109,6 +109,7 @@ class DivideDataTests(unittest.TestCase):
         train_ps, test_ps = self.Xvalid.divide_data('ADVI_ParameterSets_220528.pkl', seed=None, n_train=70, pct_train=None,
                                         initial_surfaces=None, warm_start=True)
 
+
         assert (len(train_ps.data['PrimerPairReporter'].unique()) == len(self.ps.data['PrimerPairReporter'].unique()))
 
 class TestModelFitting(unittest.TestCase):
@@ -127,7 +128,7 @@ class TestModelFitting(unittest.TestCase):
         # test the mo_indi has W=0 kappa=1
 
     def test_latent_dims(self):
-        models = self.Xvalid.fit_models(self.train_ps)
+        models = self.Xvalid.fit_models(n_restarts=2, train_ps=self.Xvalid.train_ps)
 
         # test latent dims doesnt change
         assert(len(self.Xvalid.latent_dims) == 1)

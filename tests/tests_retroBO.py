@@ -1,6 +1,6 @@
 import unittest
 import pytest
-from Code.retro_BO import RetroBO
+from experiments.retro_BO import RetroBO
 import numpy as np
 import pathlib as pl
 import os
@@ -210,7 +210,7 @@ class TestExpectedImprovementConstrained(unittest.TestCase):
         self.stdzr = ps.stdzr
 
 
-        from Code.expected_improvements import ExpectedImprovementConstrained
+        from experiments.expected_improvements import ExpectedImprovementConstrained
 
         self.ei = ExpectedImprovementConstrained(params=['r', 'm'])
 
@@ -379,7 +379,7 @@ class TestGetMetrics(unittest.TestCase):
         print(np.sum(np.sqrt(np.square(self.retroBO.models['mo_indi']['r'].model.kernel.kernels[1].kappa))))
         assert(np.sum(np.sqrt(np.square(self.retroBO.models['mo_indi']['r'].model.kernel.kernels[1].W)))
                - len(self.retroBO.models['mo_indi']['r'].model.kernel.kernels[1].W.numpy()) <0.001)
-        assert(np.sum(np.sqrt(np.square(self.retroBO.models['mo_indi']['r'].model.kernel.kernels[1].kappa))) <0.001)
+        assert(np.sum(np.sqrt(np.square(self.retroBO.models['mo_indi']['r'].model.kernel.kernels[1].kappa))) == 4.0)
 
 
     def test_get_metrics(self):

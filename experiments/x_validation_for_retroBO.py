@@ -15,7 +15,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 tf.config.threading.set_intra_op_parallelism_threads(5)
 tf.config.threading.set_inter_op_parallelism_threads(5)
 
-run_args = sys.argv[:]  # get the arguments which determine the test type. Can also input these manually using a list
+run_args = ['retro_BO_run.py', '19', '50', '0', '5', '0']  #sys.argv[:]  # get the arguments which determine the test type. Can also input these manually using a list
 print(run_args)
 seed = int(run_args[1])
 

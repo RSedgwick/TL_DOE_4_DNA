@@ -11,8 +11,8 @@ import pandas as pd
 from candas.learn import ParameterSet
 from gpflow.utilities import read_values
 from candas.learn import parray
-from x_validation_functions import CrossValidation
-from expected_improvements import ExpectedImprovement, ExpectedImprovementConstrained
+from experiments.x_validation_functions import CrossValidation
+from experiments.expected_improvements import ExpectedImprovement, ExpectedImprovementConstrained
 
 
 class RetroBO(CrossValidation):

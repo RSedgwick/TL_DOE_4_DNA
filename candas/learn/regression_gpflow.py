@@ -876,10 +876,10 @@ class GP_gpflow(Regressor):
         """
         assert self.model is not None
 
+
         maxiter = 2000
         res_LMC = gpflow.optimizers.Scipy().minimize(
-            self.model.training_loss, self.model.trainable_variables, options=dict(maxiter=maxiter), method="L-BFGS-B",
-        )
+            self.model.training_loss, self.model.trainable_variables, options=dict(maxiter=maxiter), method="L-BFGS-B")
 
     def predict(self, points_array, with_noise=True, additive_level='total', **kwargs):
         """Make predictions at supplied points using specified gp
