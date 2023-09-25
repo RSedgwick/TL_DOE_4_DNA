@@ -95,3 +95,19 @@ Results of the constrained Bayesian optimisation experiments:
 - `results` - contains the results of the cross validation and Bayesian optimisation experiments
 - `tests` - code tests
 
+## How to Cite 
+When using the code in this repository, please reference our journal paper as:
+```
+@article{thebelt2021entmoot,
+  title={Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in Diagnostic Assays},
+  author={Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark},
+  journal={},
+  volume={},
+  pages={},
+  year={},
+  publisher={}
+}
+```
+## Acknoledgements
+This work was supported by the [UKRI CDT in AI for Healthcare](https://ai4health.io/) Grant No. EP/S023283/1 
+
