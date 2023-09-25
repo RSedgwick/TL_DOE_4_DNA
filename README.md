@@ -2,7 +2,7 @@
 
 This repository contains the code for the DNA amplification expeiments conducted for the paper
 _Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in 
-Diagnostic Assays_.
+Diagnostic Assays_ [1].
 
 ## Installation
 
@@ -24,24 +24,13 @@ You also need to initialise the candas package by running the following command 
 In this project we propose a transfer learning Bayesian optimization method for competitor DNA molecule development. We
 compare the performance of different transfer learning Gaussian processes within this framework. The models we compare are:
 the multioutput Gaussian proces (MOGP), an average GP (AvgGP), the linear model of coregionalisation (LMC) and
-the latent variable multioutput Gaussian process (LVMOGP) [1]. We use cross validation to compare the predictive accuracy 
+the latent variable multioutput Gaussian process (LVMOGP) [2]. We use cross validation to compare the predictive accuracy 
 of the different models and then compare their performance in a sequential Bayesian optimisation setting.
 
 For each competitor DNA molecule we want the rate `r` to be as close to the target rate as possible and for the 
 drift `m` to lie below a threshold value. Our inputs are the number of base pairs `BP` and the % guanine-cytosine 
 content `GC`. We use an adapted expected improvement acquisition function to minimise difference between 
-the rate and target rate [2] and the probability of feasibility to deal with the drift constraint.
-
-[1] [Dai, Zhenwen, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in 
-supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 
-(2017).](https://arxiv.org/abs/1705.09862)
-
-[2] [Uhrenholt, A. K. and Jensen, B. S. (2019) Efficient Bayesian
-Optimization for Target Vector Estimation. In Proceed-
-ings of the Twenty-Second International Conference on Ar-
-tificial Intelligence and Statistics (eds. K. Chaudhuri and
-M. Sugiyama), vol. 89 of Proceedings of Machine Learn-
-ing Research](http://proceedings.mlr.press/v89/uhrenholt19a/uhrenholt19a.pdf)
+the rate and target rate [3] and the probability of feasibility to deal with the drift constraint.
 
 ## Data 
 The data used in this project was collected from the DNA amplification experiments conducted in the lab. The 
@@ -49,15 +38,15 @@ target variables were calculated in advance. See the paper for more details.
 
 ## Results
 
-Results of the cross validation experiments:
+Results of the cross validation experiments, these appear in Figure 5 of Sedgwick et al. [1]:
 
 ![cross_validation](analysis/plots/cross_validation.svg)
 
-Results of the unconstrained Bayesian optimisation experiments:
+Results of the unconstrained Bayesian optimisation experiments, these appear in Figure 6 of Sedgwick et al. [1]:
 
 ![unconstrained](analysis/plots/retroBO_cumulative_regret_r.svg)
 
-Results of the constrained Bayesian optimisation experiments:
+Results of the constrained Bayesian optimisation experiments, these appear in Figure 6 of Sedgwick et al. [1]:
 
 ![unconstrained](analysis/plots/retroBO_cumulative_regret_all_both.svg)
 
@@ -94,6 +83,22 @@ Results of the constrained Bayesian optimisation experiments:
   - `x_validation_functions.py` - contains the functions for running the cross validation results
 - `results` - contains the results of the cross validation and Bayesian optimisation experiments
 - `tests` - code tests
+
+## References 
+
+[1] [Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark. "Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in Diagnostic Assays" 
+(2023).]()
+
+[2] [Dai, Zhenwen, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in 
+supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 
+(2017).](https://arxiv.org/abs/1705.09862)
+
+[3] [Uhrenholt, A. K. and Jensen, B. S. (2019) Efficient Bayesian
+Optimization for Target Vector Estimation. In Proceed-
+ings of the Twenty-Second International Conference on Ar-
+tificial Intelligence and Statistics (eds. K. Chaudhuri and
+M. Sugiyama), vol. 89 of Proceedings of Machine Learn-
+ing Research](http://proceedings.mlr.press/v89/uhrenholt19a/uhrenholt19a.pdf)
 
 ## How to Cite 
 When using the code in this repository, please reference our journal paper as:
