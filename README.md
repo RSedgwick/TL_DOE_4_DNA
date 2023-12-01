@@ -8,7 +8,7 @@ Diagnostic Assays_ [1].
 
 To clone this repo use the command:
     
-     git clone https://github.com/RSedgwick/Transfer_Learning_Design_of_Experiments_for_DNA_Optimisation.git
+     git clone https://github.com/RSedgwick/TL_DOE_4_DNA.git
 
 The code is written in Python 3.9. To install the required packages, ensure conda is installed and run the following 
 command in the root directory of the project:
@@ -30,7 +30,7 @@ of the different models and then compare their performance in a sequential Bayes
 For each competitor DNA molecule we want the rate `r` to be as close to the target rate as possible and for the 
 drift `m` to lie below a threshold value. Our inputs are the number of base pairs `BP` and the % guanine-cytosine 
 content `GC`. We use an adapted expected improvement acquisition function to minimise difference between 
-the rate and target rate [3] and the probability of feasibility to deal with the drift constraint.
+the rate and target rate [3] and penalise drifts above a given threshold.
 
 ## Data 
 The data used in this project was collected from the DNA amplification experiments conducted in the lab. The 
@@ -72,10 +72,10 @@ Results of the constrained Bayesian optimisation experiments, these appear in Fi
 - `data` - contains the data used in the experiments
   - `ADVI_ParameterSets_220528.pkl` - the results of the DNA amplification experiments
   - `best_df.pkl` - dataframe of the best points on each of the surfaces not taking constraint into account
-  - `best_df_constrained.pkl` - dataframe of the best points on each of the surfaces taking constraint into account
+  - `best_df_penalised.pkl` - dataframe of the best points on each of the surfaces taking the drift penality into account
   - `JG067 sequence targets.csv` - the target values for the rates 
 - `experiments` - contains the code for the experiments
-  - `expected_improvements.py` - contains the expected improvement acquisition functions for both constrained and unconstrained
+  - `expected_improvements.py` - contains the expected improvement acquisition functions for both single objective and with the drift penalty 
   - `retro_BO.py` - contains class for running Bayesian optimisation experiments
     - `retro_BO_run.py` - runs the Bayesian optimisation experiments
   - `test_case_setup.py` - contains the functions for setting up the test cases e.g. starting point etc
@@ -86,24 +86,16 @@ Results of the constrained Bayesian optimisation experiments, these appear in Fi
 
 ## References 
 
-[1] [Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark. "Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in Diagnostic Assays" 
-(2023).]()
+[1] [Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark. "Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in Diagnostic Assays" (2023).]()
 
-[2] [Dai, Zhenwen, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in 
-supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 
-(2017).](https://arxiv.org/abs/1705.09862)
+[2] [Dai, Zhenwen, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 (2017).](https://arxiv.org/abs/1705.09862)
 
-[3] [Uhrenholt, A. K. and Jensen, B. S. (2019) Efficient Bayesian
-Optimization for Target Vector Estimation. In Proceed-
-ings of the Twenty-Second International Conference on Ar-
-tificial Intelligence and Statistics (eds. K. Chaudhuri and
-M. Sugiyama), vol. 89 of Proceedings of Machine Learn-
-ing Research](http://proceedings.mlr.press/v89/uhrenholt19a/uhrenholt19a.pdf)
+[3] [Uhrenholt, A. K. and Jensen, B. S. (2019) Efficient Bayesian Optimization for Target Vector Estimation. In Proceedings of the Twenty-Second International Conference on Artificial Intelligence and Statistics (eds. K. Chaudhuri and M. Sugiyama), vol. 89 of Proceedings of Machine Learning Research](http://proceedings.mlr.press/v89/uhrenholt19a/uhrenholt19a.pdf)
 
 ## How to Cite 
 When using the code in this repository, please reference our journal paper as:
 ```
-@article{thebelt2021entmoot,
+@article{sedgwick_transfer_2023,
   title={Transfer Learning Bayesian Optimization for Competitor DNA Molecule Design for Use in Diagnostic Assays},
   author={Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark},
   journal={},
