@@ -61,7 +61,7 @@ log_transform = False
 log_t = 'No_Transform'
 
 # create retroBO class
-retroBO = RetroBO(dims, latent_dims, coregion_rank, params, model_names, log_t, ei='constrained',
+retroBO = RetroBO(dims, latent_dims, coregion_rank, params, model_names, log_t, ei='penalized',
                   random_if_none=random_if_none)
 
 path = pl.Path(os.getcwd()).parent

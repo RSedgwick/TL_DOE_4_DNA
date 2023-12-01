@@ -12,7 +12,7 @@ from candas.learn import ParameterSet
 from gpflow.utilities import read_values
 from candas.learn import parray
 from experiments.x_validation_functions import CrossValidation
-from experiments.expected_improvements import ExpectedImprovement, ExpectedImprovementConstrained
+from experiments.expected_improvements import ExpectedImprovement, ExpectedImprovementPenalized
 
 
 class RetroBO(CrossValidation):
@@ -39,8 +39,8 @@ class RetroBO(CrossValidation):
         self.log_t = log_t
         if ei == 'MO':
             self.ei = ExpectedImprovement(params=params, alphas=alphas)
-        elif ei == 'constrained':
-            self.ei = ExpectedImprovementConstrained(params=params, alphas=alphas)
+        elif ei == 'penalized':
+            self.ei = ExpectedImprovementPenalized(params=params, alphas=alphas)
         self.centre_points = {'BP': 282, 'GC': 0.360511}
         self.seed = None
         self.n_restarts = None
@@ -192,11 +192,11 @@ class RetroBO(CrossValidation):
         :param seed: the seed to use for the random number generator
         :param test_type_name: the name of the test type to be used in the file name if saving"""
         path = pl.Path(
-            os.getcwd()).parent.parent / f'Results/RetroBO/restarts_{int(self.n_restarts)}_3008_constrained/results_df_{test_type_name}_{self.random_if_none}_{seed}.pkl'
+            os.getcwd()).parent.parent / f'Results/RetroBO/restarts_{int(self.n_restarts)}_3008_penalized/results_df_{test_type_name}_{self.random_if_none}_{seed}.pkl'
         with open(path, "wb") as file:
             pickle.dump(results_df, file)
         path = pl.Path(
-            os.getcwd()).parent.parent / f'Results/RetroBO/restarts_{int(self.n_restarts)}_3008_constrained/preds_df_{test_type_name}_{self.random_if_none}_{seed}.pkl'
+            os.getcwd()).parent.parent / f'Results/RetroBO/restarts_{int(self.n_restarts)}_3008_penalized/preds_df_{test_type_name}_{self.random_if_none}_{seed}.pkl'
         with open(path, "wb") as file:
             pickle.dump(predz, file)
 
@@ -330,7 +330,7 @@ class RetroBO(CrossValidation):
         :param iteration: iteration number
         :param seed: seed number"""
 
-        path = pl.Path(os.getcwd()).parent.parent / f'Results/Hyperparameters/restarts_{self.n_restarts}_3008_constrained'
+        path = pl.Path(os.getcwd()).parent.parent / f'Results/Hyperparameters/restarts_{self.n_restarts}_3008_penalized'
 
         for name, model in self.models.items():
             for param in self.params:

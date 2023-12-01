@@ -277,7 +277,7 @@ def get_best_points(params, results_df, stzd=True, log_t=False):
 
     return best_points
 
-def get_best_points_constrained(params, results_df, stzd=True, log_t=False):
+def get_best_point_penalized(params, results_df, stzd=True, log_t=False):
     """function to get the min difference between data and target for rate and drift
     :param params: list of parameters to be considered
     :param results_df: dataframe with the results
@@ -354,7 +354,7 @@ def get_win_counts(regret_df, regret_metric='combined regret'):
     win_df_totals = pd.DataFrame(win_df.sum(axis=0)).T[[mod for mod in df['model'].unique()]]
     return win_df, win_df_totals
 
-def calculate_regret(results_df, params, best_points, stzd=True, diff_from_target_only=False, constrained=False):
+def calculate_regret(results_df, params, best_points, stzd=True, diff_from_target_only=False, penalized=False):
     """calculate the regret for each model
     :param results_df: the results dataframe
     :param params: the parameters that were optimized
@@ -377,7 +377,7 @@ def calculate_regret(results_df, params, best_points, stzd=True, diff_from_targe
     # df = results_df[~results_df['PrimerPairReporter'].isin(initial_surfaces)]
     df = results_df
 
-    if constrained:
+    if penalized:
 
         df['m penalty'] = df['stzd m'] - df['target m z']
         df.loc[df['stzd m'] < df['target m z'], 'm penalty'] = 0

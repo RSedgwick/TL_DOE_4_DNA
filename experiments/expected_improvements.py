@@ -98,7 +98,7 @@ class ExpectedImprovement:
         return df
 
 
-class ExpectedImprovementConstrained(ExpectedImprovement):
+class ExpectedImprovementPenalized(ExpectedImprovement):
     """This expected improvement class creates an acquisition function where we use the target vector optimisation
      version of the expected improvement for rate and constrain the optimisation with a soft constraint on m, using
      expected feasibility. The final acquisition function is then \alpha = \alpha_r * P(m < threshold_m)."""
