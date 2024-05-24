@@ -5,7 +5,7 @@ seaborn
 scikit-learn
 openpyxl
 matplotlib
-pymc3>=3.11.2
+pymc>=3.11.2
 arviz>=0.11.2
 jax
 jaxlib

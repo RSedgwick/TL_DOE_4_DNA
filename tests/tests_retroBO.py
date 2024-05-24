@@ -280,51 +280,6 @@ class TestExpectedImprovementConstrained(unittest.TestCase):
 
         assert(np.sum(res_array - res_array_true) < 1e-8)
 
-
-# class TestBayesOpt(unittest.TestCase):
-#
-#     def setUp(self):
-#         n_train = 20
-#         np.random.seed(3)
-#         tf.random.set_seed(3)
-#         self.retroBO = RetroBO(['BP', 'GC'], ['PrimerPairReporter'], 2, ['r', 'm'], ['lmc', 'lvm', 'avg',
-#                                                                                              'mo_indi'])
-#         self.train_ps, self.test_ps = self.retroBO.divide_data(file_name='ADVI_ParameterSets_220528.pkl', seed=1, n_train=n_train,
-#                                         pct_train=None, initial_surfaces=None, warm_start=False)
-#
-#         self.retroBO.make_data_splits()
-#
-#     # def test_BestYet(self):
-#     #     y_rs = pd.Series([1.0, 2.0, 3.0])
-#     #     y_ms = pd.Series([0.01, 0.1, 0.4])
-#     #     ys = {'r': y_rs, 'm': y_ms}
-#     #     target = np.array([[1, 0]])
-#     #     best = self.retroBO.BestYet(ys, target)
-#     #     assert(best - 0.01 < 0.001)
-#     #
-#     # def test_BestYet_1_param(self):
-#     #     y_rs = pd.Series([1.0, 2.0, 3.0])
-#     #     ys = {'r': y_rs}
-#     #     target = np.array([[0.3]])
-#     #     best = self.retroBO.BestYet(ys, target)
-#     #     assert(best - 0.7 < 0.001)
-#
-#     def test_EI(self):
-#         mu = np.array([[-1.0, 2.0, 2.5], [0.01, 0.1, 0.4]]).T
-#         sig2 = np.array([[0.1, 0.2, 0.3], [0.3, 0.1, 0.2]]).T
-#         target = np.array([[1, 0]])
-#         best_yet = 1.0
-#         ei = self.retroBO.EI(mu, sig2, target, best_yet, k=1)
-#         self.assertAlmostEqual(sum(ei - np.array([0.00338, 0.23059, 0.05309])), 0, places=4)
-#
-#     def test_EI_1_param(self):
-#         mu = np.array([[-1.0, 2.0, 2.5]]).T
-#         sig2 = np.array([[0.1, 0.2, 0.3]]).T
-#         target = np.array([[1]])
-#         best_yet = 1.0
-#         ei = self.retroBO.EI(mu, sig2, target, best_yet, k=1)
-#         self.assertAlmostEqual(sum(ei - np.array([0.0001237007, 0.25683, 0.08011])), 0, places=4)
-
 class TestGetMetrics(unittest.TestCase):
 
     def setUp(self):

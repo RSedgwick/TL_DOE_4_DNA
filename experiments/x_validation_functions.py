@@ -33,7 +33,7 @@ def _add_initial_surfaces(initial_surfaces, points_per_surface, train_locations,
         elif no_points > points_per_surface[name]:
             raise ValueError(f'number of points to be observed on {name} exceeds the number of data points')
         train_locs = unique_locations[unique_locations['PrimerPairReporter'] == name].sample(n=no_points)
-        train_locations = train_locations.append(train_locs)
+        train_locations = pd.concat([train_locations,train_locs], ignore_index=True)
     return train_locations
 
 
@@ -126,7 +126,7 @@ class CrossValidation:
         if one_of_each is False:
             # select the remaining training points
             remaining_train = unique_locations.drop(train_locations.index).sample(n=n_train)
-            train_locations = train_locations.append(remaining_train)
+            train_locations = pd.concat([train_locations, remaining_train], ignore_index=True)
 
         # get test locations
         test_ps, train_ps = self._get_train_test_parameter_sets(ps, train_locations, unique_locations)
@@ -172,8 +172,13 @@ class CrossValidation:
         # create the parameter sets and ensure the same standardiser is used for both
         train_ps = ParameterSet(train)
         train_ps.stdzr = self.stdzr
-        test_ps = ParameterSet(test)
-        test_ps.stdzr = self.stdzr
+
+        if len(test_locations) == 0:
+            test_ps = None
+        else:
+            test_ps = ParameterSet(test)
+            test_ps.stdzr = self.stdzr
+
 
         return test_ps, train_ps
 

@@ -1,3 +1,5 @@
+"""adapted from John Goertz's Gumbi package https://github.com/JohnGoertz/Gumbi"""
+
 from __future__ import annotations  # Necessary for self-type annotations until Python >3.10
 
 import copy
@@ -62,8 +64,7 @@ class Standardizer(dict):
         'bkg_Cycle': {'μ': 38.2, 'σ': 23.0}
     }
 
-    # TODO: Standardizer: make `transforms` and `pymc_transforms` definable via string options
-    # TODO: Standardizer: make transform suggestions based on provided data? e.g., all>0 -> log/exp
+
     transforms = {
         'r': [np.log, np.exp],
         'ρ': [logit, expit],
@@ -76,19 +77,6 @@ class Standardizer(dict):
         'BP': [np.log, np.exp],
         'GC': [logit, expit]
     }
-
-    # pymc_transforms = {
-    #     'r': [skip, skip],
-    #     'ρ': [pm.math.logit, pm.math.invlogit],
-    #     'τ': [pm.math.log, pm.math.exp],
-    #     'τ_': [pm.math.log, pm.math.exp],
-    #     'K': [pm.math.log, pm.math.exp],
-    #     'm': [pm.math.log, pm.math.exp],
-    #     'offset': [skip, skip],
-    #     'Q': [skip, skip],
-    #     'BP': [pm.math.log, pm.math.exp],
-    #     'GC': [pm.math.logit, pm.math.invlogit]
-    # }
 
     def __init__(self, **kwargs):
         self.validate(kwargs)
@@ -163,7 +151,7 @@ class Standardizer(dict):
         -------
         float
         """
-        _transforms = cls.transforms # if not pymc3 else cls.pymc_transforms
+        _transforms = cls.transforms 
         ftransform = _transforms.get(name, [skip, skip])[0]
         if name == 'τ':
             assert lg10_Copies is not None, 'Concentration must be supplied to transform τ'
@@ -189,7 +177,7 @@ class Standardizer(dict):
         -------
         float
         """
-        _transforms = cls.transforms  #if not pymc3 else cls.pymc_transforms
+        _transforms = cls.transforms 
         rtransform = _transforms.get(name, [skip, skip])[1]
         x_ = rtransform(x)
         if name == 'τ':

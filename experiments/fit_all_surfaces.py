@@ -9,7 +9,6 @@ import pickle
 from test_case_setup import setup_problem
 import sys
 import matplotlib.pyplot as plt
-
 import argparse
 
 # ensure tensorflow doesn't use GPU or too many CPUs
@@ -36,24 +35,33 @@ def main(args):
     else:
         params = [args.params_name]
 
-  
-
-
-
+    all_surfaces = ['FP004-RP004-Probe', 'FP001-RP001x-EvaGreen', 'FP002-RP002x-EvaGreen',
+                     'FP001-RP001x-Probe', 'FP005-FP001-Probe', 'RP001x-FP002-Probe',
+                     'RP002x-FP005-Probe', 'FP005-FP004-EvaGreen', 'RP002x-FP002-EvaGreen',
+                     'FP001-RP004-EvaGreen', 'FP002-RP004-EvaGreen', 'FP004-FP005-Probe',
+                     'RP008x-FP005-Probe', 'FP005-FP001-EvaGreen', 'RP002x-FP004-EvaGreen',
+                     'RP008x-FP001-EvaGreen', 'FP001-RP001-Probe', 'FP002-RP002-Probe', 'FP004-RP004-EvaGreen',
+                     'FP001-RP001-EvaGreen', 'FP002-RP002-EvaGreen', 'FP001-RP005-Probe',
+                     'FP005-RP005-Probe', 'FP002-RP006-Probe', 'FP006-RP006-Probe',
+                     'FP003-RP008-Probe', 'FP002-RP002x-Probe', 'FP004-RP004x-Probe',
+                     'FP004-RP004x-EvaGreen', 'FP003-RP008-EvaGreen', 'FP003-RP008x-EvaGreen',
+                     'FP057.1.0-RP003x-EvaGreen', 'FP003-RP003-Probe']
     
+    drop_surfaces=None
+    learning_surfaces=['FP057.1.0-RP003x-Probe']
 
 
-    start_point, params, initial_surfaces, learning_surfaces, drop_surfaces, test_name = setup_problem(run_args)
-
+    initial_surfaces = {surface:'all' for surface in all_surfaces}
+    
     log_transform = False
 
     dims = ['BP', 'GC']
     latent_dims = ['PrimerPairReporter']
-    model_names = ['mo_indi', 'lmc', 'avg', 'lvm'] # which models to run. Should be out of: 'mo_indi', 'lmc', 'avg', 'lvm'
-    coregion_rank = 2
+    model_names = ['lmc','lvm'] # which models to run. Should be out of: 'mo_indi', 'lmc', 'avg', 'lvm'
+    coregion_rank = 10
     warm_start = True
     one_of_each = False
-    n_restarts = 10
+    n_restarts = 1
 
     # create cross validation class
     Xvalid = CrossValidation(dims, latent_dims, coregion_rank, params, model_names)
@@ -72,7 +80,6 @@ def main(args):
     results_dfs, test_dfs = Xvalid.get_metrics()
 
     print('got metrics, saving results')
-    log_t = 'No_Transform'
 
     # save the results
 
@@ -105,7 +112,7 @@ if __name__ == "__main__":
     os.environ[
         "WANDB__SERVICE_WAIT"
     ] = "300"  # this is to prevent wandb from waiting for a response from the server
-    wandb.login()
+
 
     argparser = argparse.ArgumentParser()
     

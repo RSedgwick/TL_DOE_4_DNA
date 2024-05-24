@@ -1,5 +1,5 @@
 
-def setup_problem(run_args):
+def setup_problem(surface_split):
     """function to set up the problem to be solved based on list of run args. Returns how the starting point should
     be chosen, which parameters to optimise (m, r, or both), the initial surfaces to be observed and how many
     datapoints on each, the surfaces to be learnt and the surfaces to be dropped. Also the name of the test case.
@@ -7,25 +7,6 @@ def setup_problem(run_args):
     :return: start_point, params, initial_surfaces, learning_surfaces,
     drop_surfaces, test_name"""
 
-    if int(run_args[3]) == 1:
-        start_point = 'worst_point'
-        start_point_name = '_worst_point'
-    elif int(run_args[3]) == 0:
-        start_point = None
-        start_point_name = ''
-    else:
-        start_point = 'centre'
-        start_point_name = '_centre'
-
-    if int(run_args[4]) == 0:
-        params = ['r', 'm']
-        param_name = 'both'
-    elif int(run_args[4]) == 1:
-        params = ['r']
-        param_name = 'r'
-    else:
-        params = ['m']
-        param_name = 'm'
 
     all_surfaces = ['FP004-RP004-Probe', 'FP001-RP001x-EvaGreen', 'FP002-RP002x-EvaGreen',
                      'FP001-RP001x-Probe', 'FP005-FP001-Probe', 'RP001x-FP002-Probe',
@@ -47,13 +28,13 @@ def setup_problem(run_args):
                 'FP057.1.0-RP003x-EvaGreen', 'FP003-RP003-Probe', 'FP057.1.0-RP003x-Probe']
 
 
-    if int(run_args[5]) == 0:
+    if int(surface_split) == 0:
         initial_surfaces = {'FP004-RP004-EvaGreen': 'all', 'FP002-RP002x-Probe': 'all'}
 
         learning_surfaces = ['FP004-RP004-Probe']
         surface_name = f'one_from_few_{learning_surfaces[0]}'
 
-    if int(run_args[5]) == 1:
+    if int(surface_split) == 1:
         surfs =  ['FP001-RP001-Probe', 'FP002-RP002-Probe', 'FP004-RP004-EvaGreen',
                  'FP001-RP001-EvaGreen', 'FP002-RP002-EvaGreen', 'FP001-RP005-Probe',
                  'FP005-RP005-Probe', 'FP002-RP006-Probe', 'FP006-RP006-Probe',
@@ -71,19 +52,19 @@ def setup_problem(run_args):
         learning_surfaces = ['FP004-RP004-Probe']
         surface_name = f'one_from_many_{learning_surfaces[0]}'
 
-    if int(run_args[5]) == 2:
+    if int(surface_split) == 2:
         initial_surfaces = {'FP004-RP004-EvaGreen': 'all', 'FP002-RP002x-Probe': 'all'}
 
         learning_surfaces = list(set(all_surfaces) - set(list(initial_surfaces.keys())) - set(out_targ))
         surface_name = f'many'
 
-    if int(run_args[5]) == 3:
+    if int(surface_split) == 3:
         initial_surfaces = {'FP004-RP004-EvaGreen': 'all', 'FP002-RP002x-Probe': 'all'}
 
         learning_surfaces = ['FP002-RP002x-EvaGreen']
         surface_name = f'one_from_few_{learning_surfaces[0]}'
 
-    if int(run_args[5]) == 4:
+    if int(surface_split) == 4:
         surfs = ['FP001-RP001-Probe', 'FP002-RP002-Probe', 'FP004-RP004-EvaGreen',
                  'FP001-RP001-EvaGreen', 'FP002-RP002-EvaGreen', 'FP001-RP005-Probe',
                  'FP005-RP005-Probe', 'FP002-RP006-Probe', 'FP006-RP006-Probe',
@@ -100,7 +81,7 @@ def setup_problem(run_args):
         learning_surfaces = ['FP002-RP002x-EvaGreen']
         surface_name = f'one_from_many_{learning_surfaces[0]}'
 
-    if int(run_args[5]) > 4:
+    if int(surface_split) > 4:
 
         all_surfs = ['FP001-RP001-Probe', 'FP002-RP002-Probe', 'FP004-RP004-EvaGreen',
                  'FP001-RP001-EvaGreen', 'FP002-RP002-EvaGreen', 'FP001-RP005-Probe',

@@ -1,2 +1,4 @@
 learn
+plotting
+style
 utils

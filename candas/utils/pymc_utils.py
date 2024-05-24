@@ -1,6 +1,6 @@
 """Utility functions for working with pymc3"""
 
-import pymc3 as pm
+
 
 
 def nc_Normal(name: str, mu: float, sigma: float, **kws):

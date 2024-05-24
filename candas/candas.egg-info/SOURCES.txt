@@ -6,9 +6,11 @@ candas.egg-info/requires.txt
 candas.egg-info/top_level.txt
 learn/__init__.py
 learn/aggregation.py
-learn/estimation.py
 learn/regression.py
 learn/regression_gpflow.py
+plotting/__init__.py
+plotting/regression_plots.py
+style/__init__.py
 utils/__init__.py
 utils/gp_utils.py
 utils/misc.py

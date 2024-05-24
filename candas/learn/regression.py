@@ -8,26 +8,9 @@ import pickle
 from scipy.interpolate import interpn
 
 from scipy.stats import norm
-from mpl_toolkits.mplot3d import Axes3D
 
-# import pymc3 as pm
-# import theano.tensor as tt
-from tqdm.notebook import tqdm
-
-import gpflow
-from gpflow.utilities import ops, print_summary, to_default_float
-from gpflow.config import set_default_float, default_float, set_default_summary_fmt
-from gpflow.ci_utils import ci_niter
-from gpflow.inducing_variables import InducingPoints
-from gpflow.base import Parameter, _cast_to_dtype
-import tensorflow as tf
-import tensorflow_probability as tfp
-
-
-import candas.utils.pymc_utils as pmu
 from candas.utils.misc import assert_in, assert_is_subset
-from candas.utils.gp_utils import get_ℓ_prior
-from candas.learn import ParameterArray, ParameterSet, Standardizer
+from candas.learn import ParameterArray, ParameterSet
 from candas.learn import ParameterArray as parray
 from candas.learn import UncertainParameterArray as uparray
 from candas.learn import MVUncertainParameterArray as mvuparray
