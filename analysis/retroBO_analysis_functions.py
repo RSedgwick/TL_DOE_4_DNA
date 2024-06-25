@@ -15,7 +15,7 @@ import candas
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-mpl.style.use('mystyle.mplstyle')
+# mpl.style.use('mystyle.mplstyle')
 
 def load_retroBO_data(test_name, restarts, initial_surfaces):
     """Load the results of the RetroBO experiments
@@ -206,11 +206,14 @@ def load_parameterset(log_t=False):
 def load_targets():
     """loads the target sets"""
 
-    path = pl.Path(os.getcwd()).parent
+    path = pl.Path(os.getcwd())
     with open(path / 'data' / 'JG067 sequence targets.csv', "rb") as file:
         targets = pd.read_csv(file)
     targets['PrimerPair'] = targets[['FPrimer', 'RPrimer']].agg('-'.join, axis=1)
-    targets['EvaGreen'] = ((targets['-Strand Label'] == "None") & (targets['+Strand Label'] == "None"))
+    if pd.__version__ == '1.3.4':
+        targets['EvaGreen'] = ((targets['-Strand Label']=='None') & (targets['+Strand Label']=='None'))
+    else:
+        targets['EvaGreen'] = ((targets['-Strand Label'].isna()) & (targets['+Strand Label'].isna()))
     targets.loc[targets['EvaGreen'] == True, 'EvaGreen'] = 'EvaGreen'
     targets.loc[targets['EvaGreen'] == False, 'EvaGreen'] = 'Probe'
     targets['PrimerPairReporter'] = targets[['PrimerPair', 'EvaGreen']].agg('-'.join, axis=1)
@@ -277,7 +280,7 @@ def get_best_points(params, results_df, stzd=True, log_t=False):
 
     return best_points
 
-def get_best_point_penalized(params, results_df, stzd=True, log_t=False):
+def get_best_points_penalized(params, results_df, stzd=True, log_t=False):
     """function to get the min difference between data and target for rate and drift
     :param params: list of parameters to be considered
     :param results_df: dataframe with the results
@@ -371,7 +374,7 @@ def calculate_regret(results_df, params, best_points, stzd=True, diff_from_targe
             targ_m = results_df['target m z'].unique()[0]
             results_df.loc[results_df['stzd m'] < results_df['target m z'], 'stzd m'] = results_df['target m z']
         else:
-            targ_m = 1e-2
+            targ_m = 1e-2            
             results_df.loc[results_df['m'] < targ_m, 'm'] = targ_m
 
     # df = results_df[~results_df['PrimerPairReporter'].isin(initial_surfaces)]
