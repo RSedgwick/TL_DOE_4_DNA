@@ -16,12 +16,13 @@ import argparse
 # tf.config.threading.set_intra_op_parallelism_threads(5)
 # tf.config.threading.set_inter_op_parallelism_threads(5)
 
-
+tf.config.run_functions_eagerly(False)
 
 def main(args):
 
     # run_args = ['retro_BO_run.py', '19', '50', '0', '5', '0']  #sys.argv[:]  # get the arguments which determine the test type. Can also input these manually using a list
     # print(run_args)
+    work_dir = pl.Path(args.work_dir)
 
     seed = args.seed
     pct_train = args.pct_train
@@ -52,12 +53,14 @@ def main(args):
 
 
     initial_surfaces = {surface:'all' for surface in all_surfaces}
+
+    test_name =  f'fit_all_both'
     
     log_transform = False
 
     dims = ['BP', 'GC']
     latent_dims = ['PrimerPairReporter']
-    model_names = ['lmc','lvm'] # which models to run. Should be out of: 'mo_indi', 'lmc', 'avg', 'lvm'
+    model_names = ['lmc'] # which models to run. Should be out of: 'mo_indi', 'lmc', 'avg', 'lvm'
     coregion_rank = 10
     warm_start = True
     one_of_each = False
@@ -83,7 +86,11 @@ def main(args):
 
     # save the results
 
-    path = pl.Path(os.getcwd()).parent.parent/f'Results/Xvalid_for_RetroBO/restarts_{n_restarts}_3008'
+    path = pl.Path(os.getcwd())/f'results/fit_all_{n_restarts}'
+
+    os.makedirs(path, exist_ok=True)
+
+    Xvalid.save_hyperparameters(test_name, seed, n_restarts)
 
     for param in params:
 

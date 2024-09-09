@@ -323,15 +323,16 @@ class RetroBO(CrossValidation):
         return self.models
 
 
-    def save_hyperparameters(self, test_type_name, iteration, seed):
+    def save_hyperparameters(self, test_type_name, seed):
         """function to save the hyperparameters of each of the models. I save the results outside the repo to avoid
         it getting too big.
         :param test_type_name: name of the test type
         :param iteration: iteration number
         :param seed: seed number"""
 
-        path = pl.Path(os.getcwd()).parent.parent / f'Results/Hyperparameters/restarts_{self.n_restarts}_3008_penalized'
-
+        path = pl.Path(os.getcwd()) / f'hyperparameters/restarts_{self.n_restarts}'
+        os.makedirs(path, exist_ok=True)
+        
         for name, model in self.models.items():
             for param in self.params:
                 hyp_df = pd.DataFrame()
@@ -353,7 +354,7 @@ class RetroBO(CrossValidation):
                     hyp_df['train data y'] = [model[param].model.data[1].numpy()]
 
                 hyp_df.to_pickle(path /
-                                 f'hyperparameters_{name}_{test_type_name}_{self.random_if_none}_{param}_iteration_{iteration}_seed_{seed}_{self.n_restarts}.pkl')
+                                 f'hyperparameters_{name}_{test_type_name}_{self.random_if_none}_{param}__seed_{seed}_{self.n_restarts}.pkl')
         return
 
     def filter_param_df(self, model_name, param, train_or_test='test'):

@@ -6,7 +6,7 @@ import os
 import pandas as pd
 import warnings
 
-
+from gpflow.utilities import read_values
 warnings.simplefilter("ignore")
 from candas.learn import ParameterSet, parray
 import tensorflow as tf
@@ -218,7 +218,7 @@ class CrossValidation:
                     pass
                 else:
                     train_locs = unique_locations[unique_locations['PrimerPairReporter'] == name].sample(n=1)
-                    train_locations = train_locations.append(train_locs)
+                    train_locations = pd.concat([train_locations, train_locs], ignore_index=True)
                     n_train -= 1
                     if n_train < 0:
                         raise ValueError(
@@ -241,7 +241,7 @@ class CrossValidation:
                                                  (unique_locations['GC'] == train_locs['GC'].to_numpy()[0]) &
                                                  (unique_locations['PrimerPairReporter']
                                                   == train_locs['PrimerPairReporter'].to_numpy()[0])]
-                train_locations = train_locations.append(train_loc)
+                train_locations = pd.concat([train_locations,train_loc], ignore_index=True)
                 n_train -= 1
                 if n_train < 0:
                     raise ValueError(
@@ -415,13 +415,14 @@ class CrossValidation:
                                               coregion_dims=copy.copy(self.latent_dims),
                                               params=param, coregion_rank=self.coregion_rank)
                         t1 = time.time()
-                        lvm.build_model(n_u=100, plot_BGPLVM=False, n_restarts=n_restarts,
-                                        lengthscales_init=lengthscale_init,
-                                        initialisation=lvm_init, priors=False, MAP=False,
-                                        set_inducing_points=False, train_inducing=True)
-                        t2 = time.time()
-                        lvm.train_model()
-                        t3 = time.time()
+                        with tf.device('/GPU:0'):
+                            lvm.build_model(n_u=100, plot_BGPLVM=False, n_restarts=n_restarts,
+                                            lengthscales_init=lengthscale_init,
+                                            initialisation=lvm_init, priors=False, MAP=False,
+                                            set_inducing_points=False, train_inducing=True)
+                            t2 = time.time()
+                            lvm.train_model()
+                            t3 = time.time()
                         if restart==0:
                             print(f'lvm {lengthscale_init} {lvm_init} build time {t2 - t1} train time {t3 - t2}')
                         lml = lvm.model.elbo().numpy()
@@ -1051,5 +1052,39 @@ class CrossValidation:
         #     if scale == 'standardized':
         #         unstandardize_axis_labels(ax, axis, array)
         return contour
+    
+    def save_hyperparameters(self, test_type_name, seed, n_restarts):
+        """function to save the hyperparameters of each of the models. I save the results outside the repo to avoid
+        it getting too big.
+        :param test_type_name: name of the test type
+        :param iteration: iteration number
+        :param seed: seed number"""
+
+        path = pl.Path(os.getcwd()) / f'hyperparameters/restarts_{n_restarts}'
+        os.makedirs(path, exist_ok=True)
+        
+        for name, model in self.models.items():
+            for param in self.params:
+                hyp_df = pd.DataFrame()
+                hyp_df['seed'] = [seed]
+                hyp_df['parameter array'] = [model[param].data]
+                hyp_df['test parray'] = [self.data_splits[name]['test']]
+                hyp_df['lmls'] = [self.lmls[name][param]]
+                hyp_df['hyperparameters'] = [read_values(model[param].model)]
+
+                if name == 'lvm':
+                    hyp_df['train data X'] = [model[param].model.X_data.numpy()]
+                    hyp_df['train data X fn'] = [model[param].model.X_data_fn.numpy()]
+                    hyp_df['train data y'] = [model[param].model.data.numpy()]
+                    hyp_df['H mean'] = [model[param].model.H_data_mean.numpy()]
+                    hyp_df['H var'] = [model[param].model.H_data_var.numpy()]
+
+                else:
+                    hyp_df['train data X'] = [model[param].model.data[0].numpy()]
+                    hyp_df['train data y'] = [model[param].model.data[1].numpy()]
+
+                hyp_df.to_pickle(path /
+                                 f'hyperparameters_{name}_{test_type_name}_{param}_seed_{seed}_{n_restarts}.pkl')
+        return
 
 
