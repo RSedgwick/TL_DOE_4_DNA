@@ -1,9 +1,0 @@
-#PBS -lwalltime=72:00:00
-#PBS -lselect=1:ncpus=8:mem=30gb
-#PBS -J 0-200
-
-cd $FILEPATH
-module load anaconda3/personal
-source activate candas
-
-python X_validation_for_retroBO.py $PBS_ARRAY_INDEX $PCT_TRAIN $WARM_START $PARAMS $TEST_TYPE $LOG_T
