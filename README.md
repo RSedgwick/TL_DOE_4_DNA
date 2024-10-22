@@ -86,9 +86,9 @@ Results of the constrained Bayesian optimisation experiments appear in Figure 6 
 
 ## References 
 
-[1] [Sedgwick, Ruby and Goertz, John and Stevens, Molly and Misener, Ruth and van der Wilk, Mark. "Transfer Learning Bayesian Optimization to Design Competitor DNA Molecules for Use in Diagnostic Assays" (2024).](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/bit.28854)
+[1] [Ruby Sedgwick, John Goertz, Molly Stevens, Ruth Misener and Mark van der Wilk. "Transfer Learning Bayesian Optimization to Design Competitor DNA Molecules for Use in Diagnostic Assays" (2024).](https://analyticalsciencejournals.onlinelibrary.wiley.com/doi/10.1002/bit.28854)
 
-[2] [Dai, Zhenwen, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 (2017).](https://arxiv.org/abs/1705.09862)
+[2] [Zhenwen Dai, Mauricio Álvarez, and Neil Lawrence. "Efficient modeling of latent information in supervised learning using gaussian processes." Advances in Neural Information Processing Systems 30 (2017).](https://arxiv.org/abs/1705.09862)
 
 [3] [Uhrenholt, A. K. and Jensen, B. S. (2019) Efficient Bayesian Optimization for Target Vector Estimation. In Proceedings of the Twenty-Second International Conference on Artificial Intelligence and Statistics (eds. K. Chaudhuri and M. Sugiyama), vol. 89 of Proceedings of Machine Learning Research](http://proceedings.mlr.press/v89/uhrenholt19a/uhrenholt19a.pdf)
 
